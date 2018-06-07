@@ -38,7 +38,7 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    @foreach($basic_data['menus'] as $key => $menu)
+                    @foreach(($basic_data['menus'] ?? []) as $key => $menu)
                         <li class="">
                             <a href="#">{{$menu}}</a>
                         </li>
@@ -48,7 +48,7 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
-                    @guest
+                    {{--@guest
                     <li><a href="{{ route('login') }}">Login</a></li>
                     <li><a href="{{ route('register') }}">Register</a></li>
                     @else
@@ -73,7 +73,7 @@
                                 </li>
                             </ul>
                         </li>
-                        @endguest
+                        @endguest--}}
                 </ul>
             </div>
         </div>
