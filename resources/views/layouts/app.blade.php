@@ -83,6 +83,6 @@
 </div>
 
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}?{{rand()}}"></script>
+<script src="{{ asset('js/app.js') }}}}"></script>
 </body>
 </html>
