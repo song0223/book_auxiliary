@@ -20,7 +20,7 @@ class CreateBooksTable extends Migration
             $table->string('author', 50)->comment('作者');
             $table->smallInteger('type')->comment('小说类型');
             $table->string('image', 150)->comment('封面');
-            $table->string('introduction', 255)->comment('简介');
+            $table->text('introduction')->comment('简介');
             $table->integer('read_count')->comment('阅读数');
             $table->smallInteger('is_ending')->comment('完本1=否 2=是');
             $table->softDeletes();

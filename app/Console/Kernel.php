@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Console\Commands\InitEs::class,
         \App\Console\Commands\ImportBooks::class,
+        \App\Console\Commands\ImportZj::class,
     ];
 
     /**

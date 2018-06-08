@@ -16,6 +16,7 @@ class CreateBookChapterTable extends Migration
         Schema::create('book_chapter', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('book_id')->comment('小说id');
+            $table->integer('bxwx_id')->comment('笔下文学章节id');
             $table->string('title', 50)->comment('章节名');
             $table->text('content')->comment('内容');
             $table->integer('sort')->comment('排序');
