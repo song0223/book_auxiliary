@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BookChapter;
 use App\Books;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class HomeController extends BaseController
         $q = $request->get('q');
         $paginator = Books::paginate();
         if ($q){
-            $paginator = Books::search($q)->paginate();
+            $paginator = BookChapter::search($q)->paginate();
         }
         return $this->view('home', compact('paginator', 'q'));
     }

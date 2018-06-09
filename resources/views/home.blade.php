@@ -62,7 +62,8 @@
                     <div class="panel-body ">
                         @foreach($paginator as $post)
                             <div class="result">
-                                <h2 class="title">
+                                <h3 class="title">{{ $post->book->title or ''}}</h3>
+                                <div class="info">
                                     <a href="{{ $post->url }}" target="_blank">
                                         @if (isset($post->highlight['title']))
                                             @foreach($post->highlight['title'] as $item)
@@ -72,16 +73,14 @@
                                             {{ $post->title }}
                                         @endif
                                     </a>
-                                </h2>
-                                <div class="info">
                                 </div>
                                 <div class="desc">
-                                    @if (isset($post->highlight['author']))
-                                        @foreach($post->highlight['author'] as $item)
+                                    @if (isset($post->highlight['content']))
+                                        @foreach($post->highlight['content'] as $item)
                                             ......{!! $item !!}......
                                         @endforeach
                                     @else
-                                        {{ mb_substr($post->author, 0, 150) }}......
+                                        {{ mb_substr($post->content, 0, 150) }}......
                                     @endif
                                 </div>
                                 <hr>

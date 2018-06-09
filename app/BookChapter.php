@@ -25,4 +25,9 @@ class BookChapter extends Model
             'content' => $this->content,
         ];
     }
+
+    public function book()
+    {
+        return $this->hasOne(Books::class, 'id', 'book_id');
+    }
 }
