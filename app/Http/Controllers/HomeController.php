@@ -16,7 +16,6 @@ class HomeController extends BaseController
         if ($q){
             $paginator = BookChapter::search($q)->paginate();
         }
-        dd($paginator);
         return $this->view('home', compact('paginator', 'q'));
     }
 }
