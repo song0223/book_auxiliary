@@ -8,7 +8,7 @@
                     <div class="panel-body">
                         <form action="/search">
                             <div class="input-group">
-                                <input type="text" class="form-control h50" name="q" placeholder="关键字..."
+                                <input type="text" class="form-control h50" name="query" placeholder="关键字..."
                                        value="{{$q or ''}}">
                                 <a href="/search" class="glyphicon glyphicon-remove btn form-control-feedback"
                                    style="pointer-events:auto;z-index: 1000;margin-right: 45px;line-height: 35px;"></a>
