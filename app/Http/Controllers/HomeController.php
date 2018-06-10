@@ -13,6 +13,7 @@ class HomeController extends BaseController
     {
         $q = $request->get('query');
         $paginator = Books::search($q)->paginate();
+        dd($paginator);
         if ($q){
             //$paginator = BookChapter::search($q)->paginate();
         }
