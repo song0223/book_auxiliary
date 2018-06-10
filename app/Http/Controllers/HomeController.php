@@ -12,9 +12,9 @@ class HomeController extends BaseController
     public function search(Request $request)
     {
         $q = $request->get('query');
-        $paginator = Books::paginate();
+        $paginator = Books::search($q)->paginate();
         if ($q){
-            $paginator = BookChapter::search($q)->paginate();
+            //$paginator = BookChapter::search($q)->paginate();
         }
         return $this->view('home', compact('paginator', 'q'));
     }
