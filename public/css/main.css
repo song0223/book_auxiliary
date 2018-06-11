@@ -32,6 +32,11 @@
     font-style: normal;
 }
 
+.search-lieb .media-heading em {
+    color: #EB5424;
+    font-style: normal;
+}
+
 .search-results .result .title {
     font-size: 18px;
 }

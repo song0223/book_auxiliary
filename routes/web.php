@@ -18,4 +18,4 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@search');
-Route::get('/search/{type?}/{query?}', ['as' => 'home.search', 'uses' => 'HomeController@search']);
+Route::get('/search/{t?}/{type?}/{query?}', ['as' => 'home.search', 'uses' => 'HomeController@search']);

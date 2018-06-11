@@ -16,7 +16,8 @@
                                     <li><a data-id="1" href="#">搜索小说</a></li>
                                     <li><a data-id="2" href="#">全站搜索</a></li>
                                 </ul>
-                                <input type="hidden" name="type" value="1">
+                                <input type="hidden" name="type" value="{{$type or 1}}">
+                                <input type="hidden" name="t" value="{{$t or 0}}">
                             </div>
                             <input type="text" class="form-control h50" name="query" placeholder="关键字..."
                                    value="{{$query or ''}}">
@@ -30,9 +31,11 @@
                     <div class="panel-footer">关键词搜索（支持作者名，小说标题，内容关键字）</div>
                 </div>
             </div>
-            @if($type == 1)
+        </div>
+        @if($type == 1)
+            <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default search-lieb">
                         <div class="panel-heading">小说列表</div>
                         <ul class="list-group">
                             @foreach(($paginator ?? []) as $item)
@@ -43,8 +46,23 @@
                                                  src="{{url($item->image)}}">
                                         </a>
                                         <div class="media-body">
-                                            <h4 class="media-heading">{{$item->title or ''}}
-                                                <small>{{$item->author or ''}}</small>
+                                            <h4 class="media-heading">
+                                                @if (isset($item->highlight['title']))
+                                                    @foreach($item->highlight['title'] as $em)
+                                                        {!! $em !!}
+                                                    @endforeach
+                                                @else
+                                                    {{ $item->title }}
+                                                @endif
+                                                <small>
+                                                    @if (isset($item->highlight['author']))
+                                                        @foreach($item->highlight['author'] as $em)
+                                                            {!! $em !!}
+                                                        @endforeach
+                                                    @else
+                                                        {{ $item->author }}
+                                                    @endif
+                                                </small>
                                             </h4>
                                             {!! $item->introduction !!}
                                         </div>
@@ -56,51 +74,51 @@
                     {{--分页--}}
                     {{ $paginator->links() }}
                 </div>
-        </div>
-    </div>
-    @else
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default list-panel search-results">
-                    <div class="panel-heading">
-                        <h3 class="panel-title ">
-                            <i class="fa fa-search"></i> 关于 “<span class="highlight">{{ $query }}</span>” 的搜索结果,
-                            共 {{ $paginator->total() }} 条
-                        </h3>
-                    </div>
-                    <div class="panel-body ">
-                        @foreach($paginator as $post)
-                            <div class="result">
-                                <h3 class="title">{{ $post->book->title or ''}}</h3>
-                                <div class="info">
-                                    <a href="{{ $post->url }}" target="_blank">
-                                        @if (isset($post->highlight['title']))
-                                            @foreach($post->highlight['title'] as $item)
-                                                {!! $item !!}
+            </div>
+        @else
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel panel-default list-panel search-results">
+                        <div class="panel-heading">
+                            <h3 class="panel-title ">
+                                <i class="fa fa-search"></i> 关于 “<span class="highlight">{{ $query }}</span>” 的搜索结果,
+                                共 {{ $paginator->total() }} 条
+                            </h3>
+                        </div>
+                        <div class="panel-body ">
+                            @foreach($paginator as $post)
+                                <div class="result">
+                                    <h3 class="title">{{ $post->book->title or ''}}</h3>
+                                    <div class="info">
+                                        <a href="{{ $post->url }}" target="_blank">
+                                            @if (isset($post->highlight['title']))
+                                                @foreach($post->highlight['title'] as $item)
+                                                    {!! $item !!}
+                                                @endforeach
+                                            @else
+                                                {{ $post->title }}
+                                            @endif
+                                        </a>
+                                    </div>
+                                    <div class="desc">
+                                        @if (isset($post->highlight['content']))
+                                            @foreach($post->highlight['content'] as $item)
+                                                ......{!! $item !!}......
                                             @endforeach
                                         @else
-                                            {{ $post->title }}
+                                            {{ mb_substr($post->content, 0, 150) }}......
                                         @endif
-                                    </a>
+                                    </div>
+                                    <hr>
                                 </div>
-                                <div class="desc">
-                                    @if (isset($post->highlight['content']))
-                                        @foreach($post->highlight['content'] as $item)
-                                            ......{!! $item !!}......
-                                        @endforeach
-                                    @else
-                                        {{ mb_substr($post->content, 0, 150) }}......
-                                    @endif
-                                </div>
-                                <hr>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
+                        {{ $paginator->links() }}
                     </div>
-                    {{ $paginator->links() }}
                 </div>
+                @endif
             </div>
-            @endif
-        </div>
+    </div>
 @endsection
 @section('other-js')
     <script>
@@ -111,16 +129,16 @@
         });
 
         $("#search").click(function () {
-                var type = $("input[name='type']").val();
-                var keyword = $("input[name='query']").val();
-                var url = "/search/" + type + "/" + keyword;
-                if (keyword) {
-                    window.location = url;
-                } else {
-                    $(".input-group").addClass('has-error');
-                }
+            var type = $("input[name='type']").val();
+            var keyword = $("input[name='query']").val();
+            var t = $("input[name='t']").val();
+            var url = "/search/" + t + "/" + type + "/" + keyword;
+            if (keyword) {
+                window.location = url;
+            } else {
+                $(".input-group").addClass('has-error');
             }
-        );
+        });
 
     </script>
 @endsection

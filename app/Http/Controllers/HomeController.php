@@ -9,9 +9,12 @@ use Illuminate\Http\Request;
 class HomeController extends BaseController
 {
 
-    public function search(Request $request, $type = 1, $query = null)
+    public function search(Request $request,$t = 0, $type = 1, $query = null)
     {
         $paginator = Books::paginate();
+        if ($t){
+            $paginator = Books::where('type', $t)->paginate();
+        }
         if ($type == 1) {
             if ($query) {
                 $paginator = Books::search($query)->paginate();
@@ -21,6 +24,6 @@ class HomeController extends BaseController
                 $paginator = BookChapter::search($query)->paginate();
             }
         }
-        return $this->view('home', compact('paginator', 'query', 'type'));
+        return $this->view('home', compact('paginator', 'query', 'type', 't'));
     }
 }

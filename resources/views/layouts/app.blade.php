@@ -40,7 +40,7 @@
                 <ul class="nav navbar-nav">
                     @foreach(($basic_data['menus'] ?? []) as $key => $menu)
                         <li class="">
-                            <a href="#">{{$menu}}</a>
+                            <a href="{{route('home.search', ['t' => $key])}}">{{$menu}}</a>
                         </li>
                     @endforeach
                 </ul>
