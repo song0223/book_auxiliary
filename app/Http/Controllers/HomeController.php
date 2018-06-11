@@ -9,14 +9,18 @@ use Illuminate\Http\Request;
 class HomeController extends BaseController
 {
 
-    public function search(Request $request)
+    public function search(Request $request, $type = 1, $query = null)
     {
-        $q = $request->get('query');
-        $paginator = Books::search($q)->paginate();
-        dd($paginator);
-        if ($q){
-            //$paginator = BookChapter::search($q)->paginate();
+        $paginator = Books::paginate();
+        if ($type == 1) {
+            if ($query) {
+                $paginator = Books::search($query)->paginate();
+            }
+        } else {
+            if ($query) {
+                $paginator = BookChapter::search($query)->paginate();
+            }
         }
-        return $this->view('home', compact('paginator', 'q'));
+        return $this->view('home', compact('paginator', 'query', 'type'));
     }
 }

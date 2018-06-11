@@ -84,5 +84,8 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
+{{-- 引入额外依赖JS插件 --}}
+@section('other-js')
+@show
 </body>
 </html>

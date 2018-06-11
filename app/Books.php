@@ -85,7 +85,6 @@ class Books extends Model
         return [
             'title'        => $this->title,
             'author'       => $this->author,
-            'introduction' => $this->introduction,
         ];
     }
 }
