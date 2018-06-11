@@ -3,13 +3,13 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-9 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="input-group">
                             <div class="input-group-btn">
                                 <button id="sous" type="button" class="btn btn-default dropdown-toggle h50"
-                                        data-toggle="dropdown"><span id="s">搜索小说</span>
+                                        data-toggle="dropdown"><span id="s">{{$basic_data['search_menu'][$type ?? 1]}}</span>
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
@@ -34,14 +34,14 @@
         </div>
         @if($type == 1)
             <div class="row">
-                <div class="col-md-8 col-md-offset-2">
+                <div class="col-md-9 col-md-offset-2">
                     <div class="panel panel-default search-lieb">
                         <div class="panel-heading">小说列表</div>
                         <ul class="list-group">
                             @foreach(($paginator ?? []) as $item)
                                 <li class="list-group-item">
                                     <div class="media">
-                                        <a class="media-left" href="#">
+                                        <a class="media-left" href="{{route('home.book', ['id' => $item->id])}}">
                                             <img style="width: 124px;height: 154px" class="media-object"
                                                  src="{{url($item->image)}}">
                                         </a>
@@ -77,7 +77,7 @@
             </div>
         @else
             <div class="row">
-                <div class="col-md-8 col-md-offset-2">
+                <div class="col-md-9 col-md-offset-2">
                     <div class="panel panel-default list-panel search-results">
                         <div class="panel-heading">
                             <h3 class="panel-title ">
@@ -90,7 +90,7 @@
                                 <div class="result">
                                     <h3 class="title">{{ $post->book->title or ''}}</h3>
                                     <div class="info">
-                                        <a href="{{ $post->url }}" target="_blank">
+                                        <a href="{{route('home.desc', ['id' => $post->id])}}" target="_blank">
                                             @if (isset($post->highlight['title']))
                                                 @foreach($post->highlight['title'] as $item)
                                                     {!! $item !!}
@@ -139,6 +139,5 @@
                 $(".input-group").addClass('has-error');
             }
         });
-
     </script>
 @endsection

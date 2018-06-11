@@ -3,7 +3,6 @@
     height: 50px;
 }
 .search-results {
-    margin-top: 20px;
     padding: 20px;
     line-height: 25px;
 }
@@ -113,4 +112,25 @@
 
 .search-results .list-panel .panel-body {
     padding: 0px;
+}
+
+#list dl {
+    /* float: left; */
+    overflow: hidden;
+    padding-bottom: 1px;
+    margin: auto;
+}
+
+#list dd {
+    border-bottom: 1px dashed #CCC;
+    display: inline;
+    float: left;
+    height: 25px;
+    line-height: 200%;
+    margin-bottom: 5px;
+    ow: hidden;
+    text-align: left;
+    text-indent: 10px;
+    al-align: middle;
+    width: 33%;
 }

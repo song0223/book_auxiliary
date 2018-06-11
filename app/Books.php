@@ -87,4 +87,5 @@ class Books extends Model
             'author'       => $this->author,
         ];
     }
+
 }

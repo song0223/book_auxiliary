@@ -37,7 +37,7 @@ class BxwxZjSpider
      */
     public function getZjText()
     {
-        return $this->crawler->filter('#content')->text();
+        return $this->crawler->filter('#content')->html();
     }
 
     /**
