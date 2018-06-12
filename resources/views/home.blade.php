@@ -132,7 +132,8 @@
             var type = $("input[name='type']").val();
             var keyword = $("input[name='query']").val();
             var t = $("input[name='t']").val();
-            var url = "/search/" + t + "/" + type + "/" + keyword;
+            var b = 0;
+            var url = "/search/" + t + "/" + type + "/" + b + "/" + keyword;
             if (keyword) {
                 window.location = url;
             } else {

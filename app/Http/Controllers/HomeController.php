@@ -12,28 +12,23 @@ class HomeController extends BaseController
 
     public function search(Request $request, $t = 0, $type = 1, $book_id = 0, $query = null)
     {
-        if (!MyRedis::exists('books:search:index:')) {
-            $paginator = Books::paginate();
-            if ($t) {
-                $paginator = Books::where('type', $t)->paginate();
+        $paginator = Books::paginate();
+        if ($t) {
+            $paginator = Books::where('type', $t)->paginate();
+        }
+        if ($type == 1) {
+            if ($query) {
+                $paginator = Books::search($query)->paginate();
             }
-            if ($type == 1) {
-                if ($query) {
-                    $paginator = Books::search($query)->paginate();
-                }
-            } elseif ($type == 2) {
-                if ($query) {
-                    $paginator = BookChapter::search($query)->paginate();
-                }
-            } else {
-                if ($query && $book_id) {
-                    //$paginator = BookChapter::search($query)->where('book_id', $book_id)->paginate();
-                    $paginator = BookChapter::search($query)->paginate();
-                }
+        } elseif ($type == 2) {
+            if ($query) {
+                $paginator = BookChapter::search($query)->paginate();
             }
-            MyRedis::set('books:search:index:', $paginator);
         } else {
-            $paginator = MyRedis::get('books:search:index:');
+            if ($query && $book_id) {
+                //$paginator = BookChapter::search($query)->where('book_id', $book_id)->paginate();
+                $paginator = BookChapter::search($query)->paginate();
+            }
         }
         return $this->view('home', compact('paginator', 'query', 'type', 't'));
     }
