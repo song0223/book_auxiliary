@@ -37,8 +37,8 @@
                     <div class="panel-body">
                         <div class="media">
                             <a class="media-left" href="#">
-                                <img class="media-object" src="{{url($book->image)}}"
-                                     alt="媒体对象">
+                                <img style="width: 180px;height: 240px" class="media-object" src="{{url($book->image)}}"
+                                     alt="">
                             </a>
                             <div class="media-body">
                                 <h4 class="media-heading">{{$book->title or ''}}
