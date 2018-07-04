@@ -21,3 +21,5 @@ Route::get('/', 'HomeController@search');
 Route::get('/search/{t?}/{type?}/{book_id?}/{query?}', ['as' => 'home.search', 'uses' => 'HomeController@search']);
 Route::get('/b/{id}', ['as' => 'home.book', 'uses' => 'HomeController@book']);
 Route::get('/d/{id}', ['as' => 'home.desc', 'uses' => 'HomeController@desc']);
+Route::get('/i', ['as' => 'home.import', 'uses' => 'HomeController@import']);
+Route::any('/ib', ['as' => 'home.import-book', 'uses' => 'HomeController@importBook']);

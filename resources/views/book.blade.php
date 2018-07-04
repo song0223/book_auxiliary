@@ -54,7 +54,7 @@
                         <dl>
                             @foreach($book_chapter as $chapter)
                                 <dd>
-                                    <a href="{{route('home.desc', ['id' => $chapter->id])}}">{{$chapter->title or ''}}</a>
+                                    <a href="{{route('home.desc', ['id' => $chapter->id])}}">{{str_limit($chapter->title, 36)}}</a>
                                 </dd>
                             @endforeach
                         </dl>

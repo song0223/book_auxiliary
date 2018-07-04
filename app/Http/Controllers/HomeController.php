@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\BookChapter;
 use App\Books;
+use App\Jobs\BookSpider;
+use App\Jobs\SendVerifyCode;
 use App\Libraries\MyRedis;
 use Illuminate\Http\Request;
 
@@ -61,5 +63,18 @@ class HomeController extends BaseController
             }
         }
         return $this->view('chapter', compact('book_chapter'));
+    }
+
+    public function import(Request $request)
+    {
+
+        return $this->view('import');
+    }
+
+    public function importBook(Request $request)
+    {
+        if ($url = $request->get('url')){
+            BookSpider::dispatch($url);
+        }
     }
 }
