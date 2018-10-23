@@ -7,6 +7,7 @@ use App\Books;
 use App\Jobs\BookSpider;
 use App\Jobs\SendVerifyCode;
 use App\Libraries\MyRedis;
+use App\Repository\BooksRepository;
 use Illuminate\Http\Request;
 
 class HomeController extends BaseController
@@ -39,14 +40,14 @@ class HomeController extends BaseController
     {
         $data = [];
         if (!empty($id)) {
-            if (!MyRedis::exists('books:search:info:' . $id)) {
-                $data['book'] = Books::find($id);
+            //if (!MyRedis::exists('books:search:info:' . $id)) {
+                $data['book'] = Books::where('bxwx_id', $id)->first();
                 $book_chapter_model = new BookChapter;
                 $data['book_chapter'] = $book_chapter_model->getChapterByBookId($id);
-                MyRedis::set('books:search:info:' . $id, $data);
-            } else {
-                $data = MyRedis::get('books:search:info:' . $id);
-            }
+                //MyRedis::set('books:search:info:' . $id, $data);
+            //} else {
+                //$data = MyRedis::get('books:search:info:' . $id);
+            //}
         }
         return $this->view('book', $data);
     }
@@ -55,12 +56,12 @@ class HomeController extends BaseController
     {
         $book_chapter = [];
         if (!empty($id)) {
-            if (!MyRedis::exists('books:search:desc:' . $id)) {
+            //if (!MyRedis::exists('books:search:desc:' . $id)) {
                 $book_chapter = BookChapter::find($id);
-                MyRedis::set('books:search:desc:' . $id, $book_chapter);
-            } else {
-                $book_chapter = MyRedis::get('books:search:desc:' . $id);
-            }
+               // MyRedis::set('books:search:desc:' . $id, $book_chapter);
+            //} else {
+                //$book_chapter = MyRedis::get('books:search:desc:' . $id);
+            //}
         }
         return $this->view('chapter', compact('book_chapter'));
     }
@@ -74,7 +75,10 @@ class HomeController extends BaseController
     public function importBook(Request $request)
     {
         if ($url = $request->get('url')){
-            BookSpider::dispatch($url);
+            $books_repository = new BooksRepository();
+            $books_repository->import($url);
+            //BookSpider::dispatch($url);
         }
+        return redirect('/i');
     }
 }

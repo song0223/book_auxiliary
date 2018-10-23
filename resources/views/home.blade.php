@@ -41,7 +41,7 @@
                             @foreach(($paginator ?? []) as $item)
                                 <li class="list-group-item">
                                     <div class="media">
-                                        <a class="media-left" href="{{route('home.book', ['id' => $item->id])}}">
+                                        <a class="media-left" href="{{route('home.book', ['id' => $item->bxwx_id])}}">
                                             <img style="width: 124px;height: 154px" class="media-object"
                                                  src="{{url($item->image)}}">
                                         </a>
@@ -88,7 +88,7 @@
                         <div class="panel-body ">
                             @foreach($paginator as $post)
                                 <div class="result">
-                                    <h3 class="title"><a href="{{route('home.book', ['id' => $post->book->id])}}">{{ $post->book->title or ''}}</a></h3>
+                                    <h3 class="title"><a href="{{route('home.book', ['id' => $post->book->book_id])}}">{{ $post->book->title or ''}}</a></h3>
                                     <div class="info">
                                         <a href="{{route('home.desc', ['id' => $post->id])}}" target="_blank">
                                             @if (isset($post->highlight['title']))

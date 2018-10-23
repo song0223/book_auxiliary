@@ -29,7 +29,7 @@ class Books extends Model
 
     protected $table = 'books';
 
-    protected $fillable = ['bxwx_id', 'title', 'author', 'type', 'image', 'introduction', 'read_count', 'is_ending'];
+    protected $fillable = ['bxwx_id', 'bxwx_url', 'title', 'author', 'type', 'image', 'introduction', 'read_count', 'is_ending'];
 
 
     /**

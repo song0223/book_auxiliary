@@ -16,6 +16,7 @@ class CreateBooksTable extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->increments('id');
             $table->string('bxwx_id', 50)->comment('笔下文学id');
+            $table->string('bxwx_url', 150)->comment('笔下文学url');
             $table->string('title', 100)->comment('小说标题');
             $table->string('author', 50)->comment('作者');
             $table->smallInteger('type')->comment('小说类型');

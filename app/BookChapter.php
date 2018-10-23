@@ -15,7 +15,7 @@ class BookChapter extends Model
 
     protected $table = 'book_chapter';
 
-    protected $fillable = ['book_id', 'bxwx_id', 'title', 'content', 'sort'];
+    protected $fillable = ['book_id', 'bxwx_id', 'bxwx_url', 'title', 'content', 'sort'];
 
 
     public function toSearchableArray()
@@ -28,7 +28,7 @@ class BookChapter extends Model
 
     public function book()
     {
-        return $this->hasOne(Books::class, 'id', 'book_id');
+        return $this->hasOne(Books::class, 'bxwx_id', 'book_id');
     }
 
 
@@ -39,16 +39,17 @@ class BookChapter extends Model
 
     /**
      * 上一章
-     * @param $bxwx_id
+     * @param $id
+     * @param $book_id
      * @return mixed
      */
-    public function getPrevArticleId($book_id, $bxwx_id)
+    public function getPrevArticleId($id, $book_id)
     {
-        return BookChapter::where('bxwx_id', '<', $bxwx_id)->where('book_id', $book_id)->max('id');
+        return BookChapter::where('id', '<', $id)->where('book_id', $book_id)->max('id');
     }
 
-    public function getNextArticleId($book_id, $bxwx_id)
+    public function getNextArticleId($id, $book_id)
     {
-        return BookChapter::where('bxwx_id', '>', $bxwx_id)->where('book_id', $book_id)->min('id');
+        return BookChapter::where('id', '>', $id)->where('book_id', $book_id)->min('id');
     }
 }
