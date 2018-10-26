@@ -88,7 +88,7 @@
                         <div class="panel-body ">
                             @foreach($paginator as $post)
                                 <div class="result">
-                                    <h3 class="title"><a href="{{route('home.book', ['id' => $post->book->bxwx_id])}}">{{ $post->book->title or ''}}</a></h3>
+                                    <h3 class="title" style="argin-bottom: 10px;"><a href="{{route('home.book', ['id' => $post->book->bxwx_id])}}">{{ $post->book->title or ''}}</a></h3>
                                     <div class="info">
                                         <a href="{{route('home.desc', ['id' => $post->id])}}" target="_blank">
                                             @if (isset($post->highlight['title']))
@@ -103,13 +103,13 @@
                                     <div class="desc">
                                         @if (isset($post->highlight['content']))
                                             @foreach($post->highlight['content'] as $item)
-                                                ......{!! mb_substr($item, 0, 100) !!}......
+                                                ......{!! $item !!}......
                                             @endforeach
                                         @else
-                                            {{ mb_substr($post->content, 0, 100) }}......
+                                            {!! mb_substr($post->content, 0, 100) !!}......
                                         @endif
                                     </div>
-
+                                    <hr />
                                 </div>
                             @endforeach
                         </div>
