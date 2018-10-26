@@ -29,10 +29,10 @@ class HomeController extends BaseController
             }
         } else {
             if ($query && $book_id) {
-                //$paginator = BookChapter::search($query)->where('book_id', $book_id)->paginate();
-                $paginator = BookChapter::search($query)->paginate();
+                $paginator = BookChapter::search($query)->where('book_id', $book_id)->paginate();
             }
         }
+
         return $this->view('home', compact('paginator', 'query', 'type', 't'));
     }
 
@@ -40,14 +40,14 @@ class HomeController extends BaseController
     {
         $data = [];
         if (!empty($id)) {
-            //if (!MyRedis::exists('books:search:info:' . $id)) {
+            if (!MyRedis::exists('books:search:info:' . $id)) {
                 $data['book'] = Books::where('bxwx_id', $id)->first();
                 $book_chapter_model = new BookChapter;
                 $data['book_chapter'] = $book_chapter_model->getChapterByBookId($id);
-                //MyRedis::set('books:search:info:' . $id, $data);
-            //} else {
-                //$data = MyRedis::get('books:search:info:' . $id);
-            //}
+                MyRedis::set('books:search:info:' . $id, $data);
+            } else {
+                $data = MyRedis::get('books:search:info:' . $id);
+            }
         }
         return $this->view('book', $data);
     }
@@ -56,12 +56,12 @@ class HomeController extends BaseController
     {
         $book_chapter = [];
         if (!empty($id)) {
-            //if (!MyRedis::exists('books:search:desc:' . $id)) {
+            if (!MyRedis::exists('books:search:desc:' . $id)) {
                 $book_chapter = BookChapter::find($id);
-               // MyRedis::set('books:search:desc:' . $id, $book_chapter);
-            //} else {
-                //$book_chapter = MyRedis::get('books:search:desc:' . $id);
-            //}
+                MyRedis::set('books:search:desc:' . $id, $book_chapter);
+            } else {
+                $book_chapter = MyRedis::get('books:search:desc:' . $id);
+            }
         }
         return $this->view('chapter', compact('book_chapter'));
     }
@@ -74,11 +74,17 @@ class HomeController extends BaseController
 
     public function importBook(Request $request)
     {
+        $data = [];
         if ($url = $request->get('url')){
             $books_repository = new BooksRepository();
-            $books_repository->import($url);
-            //BookSpider::dispatch($url);
+            $result = $books_repository->import($url);
+            $data['code'] = 200;
+            if ($result){
+                $data['msg'] = 'success';
+            }else{
+                $data['msg'] = '书籍已经存在！';
+            }
         }
-        return redirect('/i');
+        return response()->json($data, 200);
     }
 }

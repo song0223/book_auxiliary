@@ -88,7 +88,7 @@
                         <div class="panel-body ">
                             @foreach($paginator as $post)
                                 <div class="result">
-                                    <h3 class="title"><a href="{{route('home.book', ['id' => $post->book->book_id])}}">{{ $post->book->title or ''}}</a></h3>
+                                    <h3 class="title"><a href="{{route('home.book', ['id' => $post->book->bxwx_id])}}">{{ $post->book->title or ''}}</a></h3>
                                     <div class="info">
                                         <a href="{{route('home.desc', ['id' => $post->id])}}" target="_blank">
                                             @if (isset($post->highlight['title']))
@@ -103,21 +103,21 @@
                                     <div class="desc">
                                         @if (isset($post->highlight['content']))
                                             @foreach($post->highlight['content'] as $item)
-                                                ......{!! $item !!}......
+                                                ......{!! mb_substr($item, 0, 100) !!}......
                                             @endforeach
                                         @else
-                                            {{ mb_substr($post->content, 0, 150) }}......
+                                            {{ mb_substr($post->content, 0, 100) }}......
                                         @endif
                                     </div>
-                                    <hr>
+
                                 </div>
                             @endforeach
                         </div>
                         {{ $paginator->links() }}
                     </div>
                 </div>
-                @endif
             </div>
+        @endif
     </div>
 @endsection
 @section('other-js')
@@ -129,6 +129,16 @@
         });
 
         $("#search").click(function () {
+            search();
+        });
+
+        $(document).keyup(function(event){
+            if(event.keyCode ==13){
+                search();
+            }
+        });
+
+        function search() {
             var type = $("input[name='type']").val();
             var keyword = $("input[name='query']").val();
             var t = $("input[name='t']").val();
@@ -139,6 +149,6 @@
             } else {
                 $(".input-group").addClass('has-error');
             }
-        });
+        }
     </script>
 @endsection

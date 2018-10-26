@@ -17,11 +17,16 @@ class BookChapter extends Model
 
     protected $fillable = ['book_id', 'bxwx_id', 'bxwx_url', 'title', 'content', 'sort'];
 
+    public function searchableAs()
+    {
+        return "book_chapter";
+    }
 
     public function toSearchableArray()
     {
         return [
             'title'   => $this->title,
+            'book_id' => $this->book_id,
             'content' => $this->content,
         ];
     }
@@ -34,7 +39,7 @@ class BookChapter extends Model
 
     public function getChapterByBookId($book_id)
     {
-        return $this->where('book_id', $book_id)->select(['id', 'title'])->orderBy('sort', 'asc')->get();
+        return $this->where('book_id', $book_id)->select(['id', 'title'])->orderBy('bxwx_id', 'asc')->get();
     }
 
     /**

@@ -37,9 +37,10 @@ class BooksRepository
     {
         $client = new Client();
         $arr = parse_url($url);
-        $bxwx_id = trim($arr['path'], '/');
-        if (!Books::where('bxwx_id', $bxwx_id)->exists()) {
-            $bxwx_books_spider = new BxwxBooksSpider($client, $url);
+        $bxwx_id = trim($arr['path'], '/'). '_bqg';
+        $bxwx_books_spider = new BxwxBooksSpider($client, $url);
+
+        if (!Books::where('title', $bxwx_books_spider->getTitle())->exists() || !Books::where('bxwx_id', $bxwx_id)) {
             $book_id = $this->saveBook($bxwx_books_spider, $bxwx_id);
             if ($book_id) {
                 $bxwx_books_zj_spider = new BxwxBooksZjSpider($client, $url);
@@ -48,14 +49,16 @@ class BooksRepository
                     $arr = parse_url($book_zj_url);
                     $zj_id = explode('/', $arr['path']);
                     $zj_id = explode('.', $zj_id[2]);
-                    if (BookChapter::where('bxwx_id', $zj_id[0])->exists()) {
+                    if (BookChapter::where('bxwx_id', $zj_id[0]. '_bqg')->exists()) {
                         continue;
                     }
                     $bxwx_zj_spider = new BxwxZjSpider($client, $book_zj_url);
-                    $this->saveZj($bxwx_zj_spider, $book_id, $zj_id[0]);
+                    $this->saveZj($bxwx_zj_spider, $bxwx_id, $zj_id[0]);
                 }
             }
+            return true;
         }
+        return false;
     }
 
     protected function saveBook(BxwxBooksSpider $bxwx_books_spider, $bxwx_id)
@@ -78,7 +81,7 @@ class BooksRepository
     {
         $book_chapter_model = new BookChapter;
         $book_chapter_model->book_id = $book_id;
-        $book_chapter_model->bxwx_id = $bxwx_id;
+        $book_chapter_model->bxwx_id = $bxwx_id . '_bqg';
         $book_chapter_model->bxwx_url = $bxwx_zj_spider->getUrl();
         $book_chapter_model->title = $bxwx_zj_spider->getZjTitle();
         $book_chapter_model->content = $bxwx_zj_spider->getZjText();

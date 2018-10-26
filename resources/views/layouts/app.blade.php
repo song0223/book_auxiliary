@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="{{url('js/layui/css/layui.css')}}" rel="stylesheet"/>
 </head>
 <body>
 <div id="app">
@@ -83,10 +84,13 @@
     @yield('content')
 </div>
 
-<!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{url('js/layui/layui.js')}}"></script>
 {{-- 引入额外依赖JS插件 --}}
 @section('other-js')
 @show
+
+
+
 </body>
 </html>

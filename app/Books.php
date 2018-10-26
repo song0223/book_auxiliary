@@ -85,6 +85,7 @@ class Books extends Model
         return [
             'title'        => $this->title,
             'author'       => $this->author,
+            'bxwx_id'       => $this->bxwx_id,
         ];
     }
 
