@@ -89,6 +89,8 @@ class EsEngine extends ElasticsearchEngine
 
         return collect($results['hits']['hits'])->map(function ($hit) use ($model, $models) {
             $one = $models[$hit['_id']];
+            //过滤掉标签，以免查询的时候影响样式
+            $one->content = strip_tags($one->content);
             /**
              * 这里返回的数据，如果有 highlight，就把对应的  highlight 设置到对象上面
              */

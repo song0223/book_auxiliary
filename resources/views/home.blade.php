@@ -56,8 +56,8 @@
                                                 @endif
                                                 <small>
                                                     @if (isset($item->highlight['author']))
-                                                        @foreach($item->highlight['author'] as $em)
-                                                            {!! $em !!}
+                                                        @foreach($item->highlight['author'] as $em2)
+                                                            {!! $em2 !!}
                                                         @endforeach
                                                     @else
                                                         {{ $item->author }}
@@ -85,11 +85,11 @@
                                 共 {{ $paginator->total() }} 条
                             </h3>
                         </div>
-                        <div class="panel-body ">
+                        <div class="panel-body">
                             @foreach($paginator as $post)
                                 <div class="result">
-                                    <h3 class="title" style="argin-bottom: 10px;"><a href="{{route('home.book', ['id' => $post->book->bxwx_id])}}">{{ $post->book->title or ''}}</a></h3>
-                                    <div class="info">
+                                    <h3 class="title"><a href="{{route('home.book', ['id' => $post->book->bxwx_id])}}">{{ $post->book->title or ''}}</a></h3>
+                                    <div class="info" style="margin-top: 10px";>
                                         <a href="{{route('home.desc', ['id' => $post->id])}}" target="_blank">
                                             @if (isset($post->highlight['title']))
                                                 @foreach($post->highlight['title'] as $item)
@@ -102,15 +102,17 @@
                                     </div>
                                     <div class="desc">
                                         @if (isset($post->highlight['content']))
-                                            @foreach($post->highlight['content'] as $item)
-                                                ......{!! $item !!}......
+                                            @foreach($post->highlight['content'] as $item2)
+                                                <div>
+                                                ...{!! $item2 !!}...
+                                                </div>
                                             @endforeach
                                         @else
-                                            {!! mb_substr($post->content, 0, 100) !!}......
+                                            {!! mb_substr($post->content, 0, 100) !!}...
                                         @endif
                                     </div>
-                                    <hr />
                                 </div>
+                                <hr />
                             @endforeach
                         </div>
                         {{ $paginator->links() }}
