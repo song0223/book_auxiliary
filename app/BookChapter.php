@@ -43,18 +43,18 @@ class BookChapter extends Model
     }
 
     /**
-     * 上一章
+     * 下一章
      * @param $id
      * @param $book_id
      * @return mixed
      */
-    public function getPrevArticleId($id, $book_id)
-    {
-        return BookChapter::where('id', '<', $id)->where('book_id', $book_id)->max('id');
-    }
-
     public function getNextArticleId($id, $book_id)
     {
-        return BookChapter::where('id', '>', $id)->where('book_id', $book_id)->min('id');
+        return BookChapter::where('bxwx_id', '>', $id)->where('book_id', $book_id)->max('id');
+    }
+
+    public function getPrevArticleId($id, $book_id)
+    {
+        return BookChapter::where('bxwx_id', '<', $id)->where('book_id', $book_id)->min('id');
     }
 }

@@ -15,8 +15,8 @@
                         {!! $book_chapter->content !!}
                     </div>
                     <div class="panel-footer">
-                        <span><a href="{{route('home.desc', ['id' => $book_chapter->getPrevArticleId($book_chapter->id, $book_chapter->book->bxwx_id) ?? $book_chapter->id])}}">上一章</a></span>
-                        <span style="float: right"><a href="{{route('home.desc', ['id' => $book_chapter->getNextArticleId($book_chapter->id, $book_chapter->book->bxwx_id) ?? $book_chapter->id])}}">下一章</a></span>
+                        <span><a href="{{route('home.desc', ['id' => $book_chapter->getPrevArticleId($book_chapter->bxwx_id, $book_chapter->book->bxwx_id) ?? $book_chapter->id])}}">上一章</a></span>
+                        <span style="float: right"><a href="{{route('home.desc', ['id' => $book_chapter->getNextArticleId($book_chapter->bxwx_id, $book_chapter->book->bxwx_id) ?? $book_chapter->id])}}">下一章</a></span>
                     </div>
                 </div>
             </div>
