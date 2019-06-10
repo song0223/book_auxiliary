@@ -2,6 +2,7 @@
 
 use App\Books;
 use Goutte\Client;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
@@ -70,7 +71,7 @@ class BxwxBooksSpider
      */
     public function getIntroduction()
     {
-        return trim($this->crawler->filter('#intro > p')->text());
+        return trim($this->crawler->filter('#intro > p')->nextAll()->text());
     }
 
     /**
@@ -96,10 +97,14 @@ class BxwxBooksSpider
     public function getImage()
     {
         $img_url = $this->crawler->filter('#fmimg img')->image()->getUri();
+        //$disk = Storage::disk('oss');
+        //$disk->put('books/filename.jpg', public_path().'/books/23_23690/23690s.jpg');
+        //$disk->put('books/filename.jpg', $img_url);
         $ima_path = explode('/', parse_url($img_url)['path']);
-        $save_url = 'book/' . $ima_path[4] . '_' . $ima_path[5];
-        if (download($img_url, $save_url)) {
-            return $save_url . '/' . basename($img_url);
+        $save_url = 'books/' . $ima_path[4] . '_' . $ima_path[5];
+        //dd($save_url);
+        if ($result = download($img_url, $save_url)) {
+            return $result;
         }
         return false;
     }

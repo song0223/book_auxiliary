@@ -5,6 +5,7 @@ namespace App;
 use App\Libraries\EsSearchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
 
 class Books extends Model
@@ -25,7 +26,7 @@ class Books extends Model
      */
     use SoftDeletes;
 
-    use Searchable, EsSearchable;
+    //use Searchable, EsSearchable;
 
     protected $table = 'books';
 
@@ -36,25 +37,47 @@ class Books extends Model
      *  所属类型
      */
     const XH = 1;
-    const XZ = 2;
-    const DS = 3;
+    const WX = 2;
+    const YQ = 3;
     const LS = 4;
-    const WY = 5;
-    const KH = 6;
-    const KB = 7;
-    const QB = 8;
+    const YX = 5;
+    const Ly = 6;
 
     public static function typeMap($key = null)
     {
         $items = [
-            self::XH => '玄幻小说',
-            self::XZ => '修真小说',
-            self::DS => '都市小说',
-            self::LS => '历史小说',
-            self::WY => '网游小说',
-            self::KH => '科幻小说',
-            self::KB => '恐怖小说',
-            self::QB => '全本小说',
+            self::XH => '奇幻小说、玄幻小说',
+            self::WX => '武侠小说、仙侠小说、修真小说',
+            self::YQ => '言情小说、都市小说',
+            self::LS => '历史小说、军事小说、穿越小说',
+            self::YX => '游戏小说、竞技小说、网游小说',
+            self::Ly => '异灵小说、科幻小说',
+        ];
+        return get_items($items, $key);
+    }
+
+    public static function dQTypeMap($key = null)
+    {
+        $items = [
+            self::XH => '奇幻小说、玄幻小说大全列表',
+            self::WX => '武侠小说、仙侠小说、修真小说大全列表',
+            self::YQ => '言情小说、都市小说大全列表',
+            self::LS => '历史小说、军事小说、穿越小说大全列表',
+            self::YX => '游戏小说、竞技小说、网游小说大全列表',
+            self::Ly => '异灵小说、科幻小说大全列表',
+        ];
+        return get_items($items, $key);
+    }
+
+    public static function redisMap($key = null)
+    {
+        $items = [
+            self::XH => 10,
+            self::WX => 11,
+            self::YQ => 12,
+            self::LS => 13,
+            self::YX => 14,
+            self::Ly => 15,
         ];
         return get_items($items, $key);
     }
@@ -89,4 +112,8 @@ class Books extends Model
         ];
     }
 
+    public function getImageAttribute($value)
+    {
+        return ($value)?Storage::disk('oss')->signUrl($value,3600):'';
+    }
 }

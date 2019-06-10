@@ -50,11 +50,11 @@ class BookChapter extends Model
      */
     public function getNextArticleId($bxwx_id, $book_id)
     {
-        return BookChapter::where('bxwx_id', '>', intval($bxwx_id))->where('book_id', $book_id)->max('id');
+        return BookChapter::where('bxwx_id', '>', intval($bxwx_id))->where('book_id', $book_id)->min('bxwx_id');
     }
 
     public function getPrevArticleId($bxwx_id, $book_id)
     {
-        return BookChapter::where('bxwx_id', '<', intval($bxwx_id))->where('book_id', $book_id)->min('id');
+        return BookChapter::where('bxwx_id', '<', intval($bxwx_id))->where('book_id', $book_id)->max('bxwx_id');
     }
 }
