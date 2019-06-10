@@ -1,6 +1,7 @@
 <?php namespace App\Libraries;
 
 use Goutte\Client;
+use Illuminate\Support\Facades\Redis;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
@@ -21,7 +22,7 @@ class BooksUrlSpider
     protected $url;
 
     /**
-     * WechatPostSpider constructor.
+     * BooksUrlSpider constructor.
      * @param Client $client
      * @param        $url
      */
@@ -37,8 +38,16 @@ class BooksUrlSpider
      */
     public function getBookUrl()
     {
-        return $this->crawler->filter('#main > .box ul > li > a')->each(function ($node) {
-            $data = $node->link()->getUri();
+        $data = [];
+        return $this->crawler->filter('.novellist')->each(function ($node) use ($data){
+            $type = $node->filter('h2')->html();
+            $data[$type] = $node->filter('ul > li')->each(function ($n) use ($data, $type){
+                $d['title'] = $n->filter('a')->html();
+                $d['url'] = $n->filter('a')->link()->getUri();
+                return $d;
+            });
+            //dd($data);
+            //$data = $node->link()->getUri();
             return $data;
         });
     }

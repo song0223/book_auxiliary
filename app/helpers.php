@@ -23,8 +23,10 @@ if (!function_exists('download')) {
         $res = fopen($file_path, 'a');
         fwrite($res, $file);
         fclose($res);
+        $result = \Illuminate\Support\Facades\Storage::disk('oss')->putFile('books', new \Illuminate\Http\File($file_path));
 
-        return $file_path;
+        unlink($file_path);//删除本地图片
+        return $result;
     }
 }
 
