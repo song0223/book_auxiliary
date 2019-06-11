@@ -9,7 +9,6 @@
         "fabpot/goutte": "^3.2",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.3",
-        "jacobcyl/ali-oss-storage": "^2.1",
         "johnlui/aliyun-oss": "~2.0",
         "laravel/framework": "5.7.*",
         "laravel/scout": "^4.0",
@@ -65,5 +64,11 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.laravel-china.org"
+        }
     }
 }
