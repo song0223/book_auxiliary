@@ -8,6 +8,7 @@ use App\Libraries\BxwxZjSpider;
 use Goutte\Client;
 use App\Books;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 
 class ImportZj extends Command
 {
@@ -43,25 +44,31 @@ class ImportZj extends Command
     public function handle()
     {
         $client = new Client();
-        $books = Books::where('type', Books::XH)->get();
-        foreach ($books as $book) {
-            $bxwx_books_zj_spider = new BxwxBooksZjSpider($client, $book->bxwx_url);
-            $book_zj_urls = $bxwx_books_zj_spider->getZjUrl();
-            $this->info('小说：' . $book->title . '：开始录入!');
-            foreach ($book_zj_urls as $book_zj_url) {
-                $arr = parse_url($book_zj_url);
-                $zj_id = explode('/', $arr['path']);
-                $zj_id = explode('.', $zj_id[3]);
-                if (BookChapter::where('bxwx_id', $zj_id[0])->exists()) {
-                    continue;
-                }
-                $bxwx_zj_spider = new BxwxZjSpider($client, $book_zj_url);
-                $this->saveZj($bxwx_zj_spider, $book->id, $zj_id[0]);
-                $this->info($bxwx_zj_spider->getZjTitle() . '：录入完成!');
+        $book = Books::where('is_ending', 1)->first();
+        $bxwx_books_zj_spider = new BxwxBooksZjSpider($client, $book->bxwx_url);
+        $book_zj_urls = $bxwx_books_zj_spider->getZjUrl();
+        $this->info('小说：' . $book->title . '：开始录入!');
+        foreach ($book_zj_urls as $book_zj_url) {
+            $arr = parse_url($book_zj_url);
+            $zj_id = explode('/', $arr['path']);
+            $zj_id = explode('.', $zj_id[3]);
+            if (BookChapter::where('bxwx_id', $zj_id[0])->exists()) {
+                continue;
             }
-            $this->info('小说：' . $book->title . '：录入完成!');
+            $bxwx_zj_spider = new BxwxZjSpider($client, $book_zj_url);
+            $this->saveZj($bxwx_zj_spider, $book->id, $zj_id[0]);
+            $this->info($bxwx_zj_spider->getZjTitle() . '：录入完成!');
         }
-        $this->info('：录入结束!');
+        $a = $book->update([
+            'is_ending' => 2
+        ]);
+        /*if ($a){
+            Mail::raw('提醒', function ($message) {
+                $to = 'sxdfbb@qq.com';
+                $message ->to($to)->subject('纯文本信息邮件测试');
+            });
+        }*/
+        $this->info('小说：' . $book->title . '：录入完成!');
     }
 
     protected function saveZj(BxwxZjSpider $bxwx_zj_spider, $book_id, $bxwx_id)
