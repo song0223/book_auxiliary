@@ -26,7 +26,7 @@ class Books extends Model
      */
     use SoftDeletes;
 
-    //use Searchable, EsSearchable;
+    use Searchable, EsSearchable;
 
     protected $table = 'books';
 

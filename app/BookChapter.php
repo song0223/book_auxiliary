@@ -11,11 +11,11 @@ class BookChapter extends Model
 {
     use SoftDeletes;
 
-    //use Searchable, EsSearchable;
+    use Searchable, EsSearchable;
 
     protected $table = 'book_chapter';
 
-    protected $fillable = ['book_id', 'bxwx_id', 'bxwx_url', 'title', 'content', 'sort'];
+    protected $fillable = ['id', 'book_id', 'bxwx_id', 'bxwx_url', 'title', 'content', 'sort'];
 
     public function searchableAs()
     {
@@ -33,7 +33,7 @@ class BookChapter extends Model
 
     public function book()
     {
-        return $this->hasOne(Books::class, 'bxwx_id', 'book_id');
+        return $this->hasOne(Books::class, 'id', 'book_id');
     }
 
 
@@ -50,11 +50,11 @@ class BookChapter extends Model
      */
     public function getNextArticleId($bxwx_id, $book_id)
     {
-        return BookChapter::where('bxwx_id', '>', intval($bxwx_id))->where('book_id', $book_id)->min('bxwx_id');
+        return BookChapter::where('id', '>', intval($bxwx_id))->where('book_id', $book_id)->min('id');
     }
 
     public function getPrevArticleId($bxwx_id, $book_id)
     {
-        return BookChapter::where('bxwx_id', '<', intval($bxwx_id))->where('book_id', $book_id)->max('bxwx_id');
+        return BookChapter::where('id', '<', intval($bxwx_id))->where('book_id', $book_id)->max('id');
     }
 }
