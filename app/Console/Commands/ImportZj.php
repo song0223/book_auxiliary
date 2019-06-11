@@ -43,7 +43,7 @@ class ImportZj extends Command
     public function handle()
     {
         $client = new Client();
-        $books = Books::all();
+        $books = Books::where('type', Books::XH)->get();
         foreach ($books as $book) {
             $bxwx_books_zj_spider = new BxwxBooksZjSpider($client, $book->bxwx_url);
             $book_zj_urls = $bxwx_books_zj_spider->getZjUrl();
@@ -51,7 +51,7 @@ class ImportZj extends Command
             foreach ($book_zj_urls as $book_zj_url) {
                 $arr = parse_url($book_zj_url);
                 $zj_id = explode('/', $arr['path']);
-                $zj_id = explode('.', $zj_id[2]);
+                $zj_id = explode('.', $zj_id[3]);
                 if (BookChapter::where('bxwx_id', $zj_id[0])->exists()) {
                     continue;
                 }
@@ -67,13 +67,15 @@ class ImportZj extends Command
     protected function saveZj(BxwxZjSpider $bxwx_zj_spider, $book_id, $bxwx_id)
     {
         $a = preg_replace("/<p\>.*?<\/p>/", '', $bxwx_zj_spider->getZjText());
-        $a = str_replace('(三七中文 et)','',$a);
+        $a = str_replace('(三七中文 et)', '', $a);
+        $a = str_replace('    一秒记住【乐文 .la】，为您提供精彩阅读。', '', $a);
         BookChapter::create([
-            'book_id' => $book_id,
-            'bxwx_id' => $bxwx_id,
-            'title'   => trim($bxwx_zj_spider->getZjTitle()),
-            'content' => $a,
-            'sort'    => $bxwx_id,
+            'book_id'  => $book_id,
+            'bxwx_id'  => $bxwx_id,
+            'bxwx_url' => $bxwx_zj_spider->getUrl(),
+            'title'    => trim($bxwx_zj_spider->getZjTitle()),
+            'content'  => $a,
+            'sort'     => $bxwx_id,
         ]);
     }
 }
