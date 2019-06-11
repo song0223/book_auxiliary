@@ -46,12 +46,12 @@ class Books extends Model
     public static function typeMap($key = null)
     {
         $items = [
-            self::XH => '奇幻小说、玄幻小说',
-            self::WX => '武侠小说、仙侠小说、修真小说',
-            self::YQ => '言情小说、都市小说',
-            self::LS => '历史小说、军事小说、穿越小说',
-            self::YX => '游戏小说、竞技小说、网游小说',
-            self::Ly => '异灵小说、科幻小说',
+            self::XH => '奇幻玄幻',
+            self::WX => '武侠修真',
+            self::YQ => '都市言情',
+            self::LS => '历史军事',
+            self::YX => '网游竞技',
+            self::Ly => '科幻异灵',
         ];
         return get_items($items, $key);
     }

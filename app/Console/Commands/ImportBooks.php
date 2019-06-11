@@ -63,7 +63,7 @@ class ImportBooks extends Command
         }*/
         /*$value = 'books/BrxCAB2D4DRGkUQ9mAkSocKENMbKhJ58AlIwhY1f.jpeg';
         $a = ($value)?Storage::disk('oss')->get($value,3600):'';*/
-        Redis::select(Books::redisMap(Books::XH));//奇幻小说、玄幻小说库
+        Redis::select(Books::redisMap(Books::Ly));//奇幻小说、玄幻小说库
         $books_urls = Redis::command('keys', ['*']);
         foreach ($books_urls as $url) {
             $url1 = $redis->get($url);
@@ -85,7 +85,7 @@ class ImportBooks extends Command
             'bxwx_id'      => $bxwx_id,
             'author'       => $bxwx_books_spider->getAuthor(),
             'title'        => $title,
-            'type'         => Books::XH,
+            'type'         => Books::Ly,
             'bxwx_url'     => $bxwx_books_spider->getUrl(),
             'image'        => $bxwx_books_spider->getImage(),
             'introduction' => $bxwx_books_spider->getIntroduction(),

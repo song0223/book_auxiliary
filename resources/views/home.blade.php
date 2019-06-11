@@ -41,7 +41,7 @@
                             @foreach(($paginator ?? []) as $item)
                                 <li class="list-group-item">
                                     <div class="media">
-                                        <a class="media-left" href="{{route('home.book', ['id' => $item->bxwx_id])}}">
+                                        <a class="media-left" href="{{route('home.book', ['id' => $item->id])}}">
                                             <img style="width: 124px;height: 154px" class="media-object"
                                                  src="{{url($item->image)}}">
                                         </a>

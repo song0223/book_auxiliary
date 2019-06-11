@@ -43,11 +43,9 @@ class ImportZj extends Command
     public function handle()
     {
         $client = new Client();
-        $url = 'http://www.biquge.com.tw/';
         $books = Books::all();
         foreach ($books as $book) {
-            $book_url = $url . $book->bxwx_id;
-            $bxwx_books_zj_spider = new BxwxBooksZjSpider($client, $book_url);
+            $bxwx_books_zj_spider = new BxwxBooksZjSpider($client, $book->bxwx_url);
             $book_zj_urls = $bxwx_books_zj_spider->getZjUrl();
             $this->info('小说：' . $book->title . '：开始录入!');
             foreach ($book_zj_urls as $book_zj_url) {
@@ -68,11 +66,13 @@ class ImportZj extends Command
 
     protected function saveZj(BxwxZjSpider $bxwx_zj_spider, $book_id, $bxwx_id)
     {
+        $a = preg_replace("/<p\>.*?<\/p>/", '', $bxwx_zj_spider->getZjText());
+        $a = str_replace('(三七中文 et)','',$a);
         BookChapter::create([
             'book_id' => $book_id,
             'bxwx_id' => $bxwx_id,
-            'title'   => $bxwx_zj_spider->getZjTitle(),
-            'content' => $bxwx_zj_spider->getZjText(),
+            'title'   => trim($bxwx_zj_spider->getZjTitle()),
+            'content' => $a,
             'sort'    => $bxwx_id,
         ]);
     }

@@ -41,7 +41,7 @@ class HomeController extends BaseController
         $data = [];
         if (!empty($id)) {
             if (!MyRedis::exists('books:search:info:' . $id)) {
-                $data['book'] = Books::where('bxwx_id', $id)->first();
+                $data['book'] = Books::find($id);
                 $book_chapter_model = new BookChapter;
                 $data['book_chapter'] = $book_chapter_model->getChapterByBookId($id);
                 MyRedis::set('books:search:info:' . $id, $data);

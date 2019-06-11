@@ -101,7 +101,12 @@ class BxwxBooksSpider
         //$disk->put('books/filename.jpg', public_path().'/books/23_23690/23690s.jpg');
         //$disk->put('books/filename.jpg', $img_url);
         $ima_path = explode('/', parse_url($img_url)['path']);
-        $save_url = 'books/' . $ima_path[4] . '_' . $ima_path[5];
+
+        if (count($ima_path) > 5){
+            $save_url = 'books/' . $ima_path[4] . '_' . $ima_path[5];
+        }else{
+            $save_url = 'books/' . $ima_path[4];
+        }
         //dd($save_url);
         if ($result = download($img_url, $save_url)) {
             return $result;
