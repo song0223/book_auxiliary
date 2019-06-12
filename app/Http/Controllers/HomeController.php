@@ -42,6 +42,7 @@ class HomeController extends BaseController
         if (!empty($id)) {
             //if (!MyRedis::exists('books:search:info:' . $id)) {
                 $data['book'] = Books::find($id);
+                $data['book']->increment('read_count', 1);
                 $book_chapter_model = new BookChapter;
                 $data['book_chapter'] = $book_chapter_model->getChapterByBookId($id);
                 /*MyRedis::set('books:search:info:' . $id, $data);
@@ -57,12 +58,13 @@ class HomeController extends BaseController
     {
         $book_chapter = [];
         if (!empty($id)) {
-            if (!MyRedis::exists('books:search:desc:' . $id)) {
+            //if (!MyRedis::exists('books:search:desc:' . $id)) {
                 $book_chapter = BookChapter::find($id);
+                Books::find($book_chapter->book->id)->increment('read_count', 1);
                 MyRedis::set('books:search:desc:' . $id, $book_chapter);
-            } else {
+            /*} else {
                 $book_chapter = MyRedis::get('books:search:desc:' . $id);
-            }
+            }*/
         }
         return $this->view('chapter', compact('book_chapter'));
     }
