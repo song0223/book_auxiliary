@@ -16,7 +16,7 @@
                                     <li><a data-id="1" href="#">搜索小说</a></li>
                                     <li><a data-id="2" href="#">全站搜索</a></li>
                                 </ul>
-                                <input type="hidden" name="type" value="{{$type or 1}}<?=$type ?? 1?>">
+                                <input type="hidden" name="type" value="<?=$type ?? 1?>">
                                 <input type="hidden" name="t" value="<?=$t ?? 0?>">
                             </div>
                             <input type="text" class="form-control h50" name="query" placeholder="关键字..."
