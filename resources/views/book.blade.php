@@ -41,12 +41,12 @@
                                      alt="">
                             </a>
                             <div class="media-body">
-                                <h4 class="media-heading">{{$book->title or ''}}
-                                    <small>{{$book->author or ''}}</small>
+                                <h4 class="media-heading"><b><?=$book->title ?? ''?></b>
+                                    <small><?=$book->author ?? ''?></small>
                                     <small style="float: right">
                                         最后更新时间{{\Carbon\Carbon::parse($book->updated_at)->format('Y-m-d')}}</small>
                                 </h4>
-                                {{$book->introduction or ''}}
+                                <?=$book->introduction ?? ''?>
                             </div>
                         </div>
                     </div>

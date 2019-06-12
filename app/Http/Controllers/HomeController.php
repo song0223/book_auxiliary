@@ -73,7 +73,7 @@ class HomeController extends BaseController
         return $this->view('import');
     }
 
-    public function importBook(Request $request)
+    public function importBook(Request $request, $query = null)
     {
         $data = [];
         if ($url = $request->get('url')) {
