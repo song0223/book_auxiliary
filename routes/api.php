@@ -18,3 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('phone/code', 'ApiController@sendVerifyCode');
+
+Route::get('index', 'ApiController@index');
+Route::get('list/{type?}', 'ApiController@list');
+Route::get('desc/{id}', 'ApiController@desc');
+Route::get('chapter/{id}', 'ApiController@chapter');
