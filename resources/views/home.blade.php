@@ -9,7 +9,7 @@
                         <div class="input-group">
                             <div class="input-group-btn">
                                 <button id="sous" type="button" class="btn btn-default dropdown-toggle h50"
-                                        data-toggle="dropdown"><span id="s">{{$basic_data['search_menu'][$type ?? 1]}}</span>
+                                        data-toggle="dropdown"><span id="s"><?=$basic_data['search_menu'][$type ?? 1]?></span>
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
