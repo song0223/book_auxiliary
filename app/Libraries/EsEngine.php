@@ -1,5 +1,6 @@
 <?php namespace App\Libraries;
 
+use Illuminate\Support\Collection;
 use Laravel\Scout\Builder;
 use ScoutEngines\Elasticsearch\ElasticsearchEngine;
 

@@ -88,7 +88,7 @@
                         <div class="panel-body">
                             @foreach($paginator as $post)
                                 <div class="result">
-                                    <h3 class="title"><a href="{{route('home.book', ['id' => $post->book->bxwx_id])}}">{{ $post->book->title or ''}}</a></h3>
+                                    <h3 class="title"><a href="{{route('home.book', ['id' => $post->book->bxwx_id])}}"><?=$post->book->title ?? ''?></a></h3>
                                     <div class="info" style="margin-top: 10px";>
                                         <a href="{{route('home.desc', ['id' => $post->id])}}" target="_blank">
                                             @if (isset($post->highlight['title']))
