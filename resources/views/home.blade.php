@@ -52,7 +52,7 @@
                                                         {!! $em !!}
                                                     @endforeach
                                                 @else
-                                                    {{ $item->title }}
+                                                    <?=$item->title?>
                                                 @endif
                                                 <small>
                                                     @if (isset($item->highlight['author']))
@@ -96,7 +96,7 @@
                                                     {!! $item !!}
                                                 @endforeach
                                             @else
-                                                {{ $post->title }}
+                                                <?=$post->title?>
                                             @endif
                                         </a>
                                     </div>
