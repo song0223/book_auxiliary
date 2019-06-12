@@ -36,19 +36,20 @@ class HomeController extends BaseController
         return $this->view('home', compact('paginator', 'query', 'type', 't'));
     }
 
-    public function book(Request $request, $id)
+    public function book(Request $request, $id, $query = null)
     {
         $data = [];
         if (!empty($id)) {
-            if (!MyRedis::exists('books:search:info:' . $id)) {
+            //if (!MyRedis::exists('books:search:info:' . $id)) {
                 $data['book'] = Books::find($id);
                 $book_chapter_model = new BookChapter;
                 $data['book_chapter'] = $book_chapter_model->getChapterByBookId($id);
-                MyRedis::set('books:search:info:' . $id, $data);
+                /*MyRedis::set('books:search:info:' . $id, $data);
             } else {
                 $data = MyRedis::get('books:search:info:' . $id);
-            }
+            }*/
         }
+        $data['query'] = $query;
         return $this->view('book', $data);
     }
 
@@ -75,13 +76,13 @@ class HomeController extends BaseController
     public function importBook(Request $request)
     {
         $data = [];
-        if ($url = $request->get('url')){
+        if ($url = $request->get('url')) {
             $books_repository = new BooksRepository();
             $result = $books_repository->import($url);
             $data['code'] = 200;
-            if ($result){
+            if ($result) {
                 $data['msg'] = 'success';
-            }else{
+            } else {
                 $data['msg'] = '书籍已经存在！';
             }
         }

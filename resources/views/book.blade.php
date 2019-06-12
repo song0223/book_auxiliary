@@ -18,9 +18,9 @@
                                         <li><a data-id="{{$key}}" href="#">{{$menu}}</a></li>
                                     @endforeach
                                 </ul>
-                                <input type="hidden" name="type" value="{{$type or 1}}">
+                                <input type="hidden" name="type" value="1">
                                 <input type="hidden" name="book_id" value="{{$book->bxwx_id or 0}}">
-                                <input type="hidden" name="t" value="{{$t or 0}}">
+                                <input type="hidden" name="t" value="0">
                             </div>
                             <input type="text" class="form-control h50" name="query" placeholder="关键字..."
                                    value="{{$query or ''}}">
