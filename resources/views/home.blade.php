@@ -144,6 +144,9 @@
             var type = $("input[name='type']").val();
             var keyword = $("input[name='query']").val();
             var t = $("input[name='t']").val();
+            if (!t){
+                t = 0;
+            }
             var b = 0;
             var url = "/search/" + t + "/" + type + "/" + b + "/" + keyword;
             if (keyword) {
