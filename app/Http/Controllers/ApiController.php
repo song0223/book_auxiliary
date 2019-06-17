@@ -25,12 +25,13 @@ class ApiController extends Controller
         //热门
         $model = new Books;
         $data['hot'] = $model->orderBy('read_count', 'desc')->limit('5')->get();
-        $data['xh'] = $model->where('type', Books::XH)->orderBy('read_count', 'desc')->limit('5')->get();
-        $data['WX'] = $model->where('type', Books::WX)->orderBy('read_count', 'desc')->limit('5')->get();
-        $data['YQ'] = $model->where('type', Books::YQ)->orderBy('read_count', 'desc')->limit('5')->get();
-        $data['LS'] = $model->where('type', Books::LS)->orderBy('read_count', 'desc')->limit('5')->get();
-        $data['YX'] = $model->where('type', Books::YX)->orderBy('read_count', 'desc')->limit('5')->get();
-        $data['Ly'] = $model->where('type', Books::Ly)->orderBy('read_count', 'desc')->limit('5')->get();
+	$data['type'] = Books::typeMap();
+        $data['list'][Books::XH] = $model->where('type', Books::XH)->orderBy('read_count', 'desc')->limit('5')->get();
+        $data['list'][Books::WX] = $model->where('type', Books::WX)->orderBy('read_count', 'desc')->limit('5')->get();
+        $data['list'][Books::YQ] = $model->where('type', Books::YQ)->orderBy('read_count', 'desc')->limit('5')->get();
+        $data['list'][Books::LS] = $model->where('type', Books::LS)->orderBy('read_count', 'desc')->limit('5')->get();
+        $data['list'][Books::YX] = $model->where('type', Books::YX)->orderBy('read_count', 'desc')->limit('5')->get();
+        $data['list'][Books::Ly] = $model->where('type', Books::Ly)->orderBy('read_count', 'desc')->limit('5')->get();
         return response()->json($data);
     }
 
